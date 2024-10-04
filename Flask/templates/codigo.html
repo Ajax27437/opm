@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Código fonte</title>
+</head>
+<body>
+    <a href="/"><<< Voltar</a>
+    <p> PYTHON<br><br>
+
+        from flask import Flask, render_template, request<br>
+        import sqlite3<br>
+        import webbrowser<br>
+        import threading<br>
+        
+        # Criação da instância da aplicação Flask<br>
+        app = Flask(__name__)<br>
+        
+        # Função para abrir o navegador automaticamente<br>
+        def open_browser():<br>
+        ....webbrowser.open('http://127.0.0.1:5000')<br>
+        
+        @app.route("/")<br>
+        def home():<br>
+        ....# Renderiza o template sem resultado inicialmente<br>
+        ....return render_template("index.html", resultado=None)<br>
+        
+        @app.route("/código_fonte")<br>
+        def codigo():<br>
+        ....return render_template("codigo.html")<br>
+        # Define a rota para lidar com o formulário enviado (com método POST)<br>
+        @app.route('/button', methods=['POST'])<br>
+        def submit():<br>
+        ....# Pega os valores do formulário<br>
+        ....numero1 = request.form['numero1']<br>
+        ....numero2 = request.form['numero2']<br>
+        ....operacao = request.form['operacao']<br>
+            
+        ....# Inicializa uma variável para o resultado<br>
+        ....resultado = None<br>
+            
+        ....# Realiza a operação de soma<br>
+        ....if operacao == "+":<br>
+        .......resultado = f'{numero1} + {numero2} = {float(numero1) + float(numero2)}'<br>
+        ....elif operacao == "-":<br>
+        .......resultado = f'{numero1} - {numero2} = {float(numero1) - float(numero2)}'<br>
+        ....elif operacao == "*":<br>
+        .......resultado = f'{numero1} * {numero2} = {float(numero1) * float(numero2)}'<br>
+        ....elif operacao == "//":<br>
+        .......resultado = f'{numero1} // {numero2} = {float(numero1) // float(numero2)}'<br>
+        ....elif operacao == "/":<br>
+        ........resultado = f'{numero1} / {numero2} = {float(numero1) / float(numero2)}'<br>
+        ....elif operacao == "**":<br>
+        .......resultado = f'{numero1} ** {numero2} = {float(numero1) ** float(numero2)}'<br>
+        ....elif operacao == "%":<br>
+        .......resultado = f'{numero1} % {numero2} = {float(numero1) % float(numero2)}'<br>
+        ....else:<br>
+        .......resultado = f'ERRO: o sinal "{operacao}", não existe!'<br>
+            
+        ....# Renderiza o template passando o resultado<br>
+        ....return render_template("index.html", resultado=resultado)<br>
+        
+        if __name__ == "__main__":<br>
+        ....# Inicia o servidor e abre o navegador em uma nova thread<br>
+        ....threading.Timer(0.1, open_browser).start()<br>
+        ....app.run(host='0.0.0.0', port=5000, debug=True)
+ 
+
+
+        </p>
+
+</body>
+</html>
